@@ -72,28 +72,34 @@ export const AddEditServerModal: React.FC<AddEditServerModalProps> = ({ serverTo
     }
 
     setIsSaving(true);
-    const parsedTags = tagsInput
-      .split(',')
-      .map(t => t.trim())
-      .filter(Boolean);
+    try {
+      const parsedTags = tagsInput
+        .split(',')
+        .map(t => t.trim())
+        .filter(Boolean);
 
-    await saveServer(
-      {
-        id: serverToEdit?.id || 'srv_' + Math.random().toString(36).substring(2, 9),
-        name: name.trim(),
-        host: host.trim(),
-        port: parseInt(port, 10) || 22,
-        username: username.trim(),
-        authType,
-        tags: parsedTags,
-        osInfo: serverToEdit?.osInfo || (host.includes('ubuntu') ? 'Ubuntu 24.04 LTS' : 'Linux x86_64'),
-      },
-      secret,
-      passphrase
-    );
+      await saveServer(
+        {
+          id: serverToEdit?.id || 'srv_' + Math.random().toString(36).substring(2, 9),
+          name: name.trim(),
+          host: host.trim(),
+          port: parseInt(port, 10) || 22,
+          username: username.trim(),
+          authType,
+          tags: parsedTags,
+          osInfo: serverToEdit?.osInfo || (host.includes('ubuntu') ? 'Ubuntu 24.04 LTS' : 'Linux x86_64'),
+        },
+        secret,
+        passphrase
+      );
 
-    setIsSaving(false);
-    onClose();
+      onClose();
+    } catch (err: any) {
+      console.error('Failed to save server:', err);
+      showToast(err.message || 'Failed to save server', 'error');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
