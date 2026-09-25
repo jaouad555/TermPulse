@@ -1,0 +1,6 @@
+{
+  "name": "TermPulse SSH & SFTP Manager",
+  "description": "Production-ready modern SSH & SFTP client with interactive terminal, encrypted key vault, file manager, and full native Android Clean Architecture codebase.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
